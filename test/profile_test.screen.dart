@@ -21,8 +21,6 @@ void main() {
         home: ProfileScreen(),
       ),
     );
-
-    // Verify if the UI elements are present
     expect(find.text('My Profile'), findsOneWidget);
     expect(find.byType(CircleAvatar), findsOneWidget);
     expect(find.text('Logout'), findsOneWidget);
@@ -35,14 +33,11 @@ void main() {
       ),
     );
 
-    // Mock the signOut method
     when(FirebaseAuth.instance.signOut()).thenAnswer((_) async {});
 
-    // Tap the logout button
     await tester.tap(find.text('Logout'));
     await tester.pump();
 
-    // Verify if the signOut method is called and navigation is performed
     verify(FirebaseAuth.instance.signOut()).called(1);
     verify(mockController.logout()).called(1);
     expect(find.byType(LoginScreen), findsOneWidget);
