@@ -18,6 +18,8 @@ class ProfileController extends GetxController {
   void onClose() {
     super.onClose();
   }
+  
+  void logout() {}
 
   void increment() => count.value++;
 }

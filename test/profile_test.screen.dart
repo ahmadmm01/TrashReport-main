@@ -1,10 +1,10 @@
 import 'package:final_project_2023/presentation/profile/controllers/profile.controller.dart';
 import 'package:final_project_2023/presentation/profile/profile.screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:final_project_2023/presentation/auth/login/auth_login.screen.dart';
-import 'package:final_project_2023/screens/profile_screen.dart';
 
 class MockProfileController extends Mock implements ProfileController {}
 
