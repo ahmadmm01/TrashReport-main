@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:final_project_2023/presentation/auth/login/auth_login.screen.dart';
-import 'package:final_project_2023/presentation/home/home.screen.dart';
+import 'package:final_project_2023/presentation/trash/trash.screen.dart';
 
 void main() {
   testWidgets('Login Integration Test', (WidgetTester tester) async {
