@@ -2,6 +2,7 @@
 
 import 'package:final_project_2023/constants.dart';
 import 'package:final_project_2023/firebase_options.dart';
+import 'package:final_project_2023/presentation/screens.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,6 @@ void main() {
 
     await tester.pumpAndSettle();
 
-    expect(find.text('Home Screen'), findsOneWidget);
+    expect(find.byType(TrashScreen), findsOneWidget);
   });
 }
