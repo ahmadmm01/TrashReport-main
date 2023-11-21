@@ -1,38 +1,66 @@
-import 'package:final_project_2023/presentation/home/home.screen.dart';
+// ignore_for_file: unused_element, no_leading_underscores_for_local_identifiers
+
+import 'package:final_project_2023/constants.dart';
+import 'package:final_project_2023/firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:final_project_2023/main.dart'; // Replace with the path to your main.dart file
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:final_project_2023/presentation/auth/login/auth_login.screen.dart';
+import 'package:final_project_2023/presentation/home/home.screen.dart';
 
 void main() {
   testWidgets('Login Integration Test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(
-        HomeScreen()); // Replace with the name of your main app widget
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-    // Wait for the app to load
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    Future<void> _signInWithGoogle() async {
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final UserCredential authResult =
+          await _auth.signInWithCredential(credential);
+      final User? user = authResult.user;
+      if (user != null) {
+        Get.offAll(const HomeScreen());
+        Get.snackbar(
+          'Success',
+          'Login success',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: kSecondColor,
+          colorText: Colors.white,
+          duration: const Duration(seconds: 2),
+          margin: const EdgeInsets.all(10),
+          borderRadius: 10,
+        );
+      }
+    }
+
+    await tester.pumpWidget(const LoginScreen());
+
     await tester.pumpAndSettle();
 
-    // Find the email and password text fields
-    final emailField =
-        find.byKey(Key('email_field')); // Add a key to your email text field
-    final passwordField = find
-        .byKey(Key('password_field')); // Add a key to your password text field
+    final emailField = find.byKey(const Key('email_field'));
+    final passwordField = find.byKey(const Key('password_field'));
 
-    // Enter the username and password
     await tester.enterText(emailField, 'adakahmangga@gmail.com');
     await tester.enterText(passwordField, 'mangga1234');
 
-    // Find and tap the login button
-    final loginButton =
-        find.byKey(Key('login_button')); // Add a key to your login button
+    final loginButton = find.byKey(const Key('login_button'));
     await tester.tap(loginButton);
 
-    // Wait for the authentication process to complete
     await tester.pumpAndSettle();
 
-    // Check if the user is redirected to the home screen
-    expect(find.text('Home Screen'),
-        findsOneWidget); // Replace with a text that indicates you are on the home screen
+    expect(find.text('Home Screen'), findsOneWidget);
   });
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:animate_do/animate_do.dart';
 import 'package:final_project_2023/constants.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 5,
               ),
               FadeInUp(
-                child: Container(
+                child: SizedBox(
                   height: 270,
                   child: Stack(
                     children: _images.asMap().entries.map((e) {
@@ -95,12 +97,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 15,
               ),
               FadeInUp(
+                key: const Key('email_field'),
                 delay: const Duration(milliseconds: 800),
                 duration: const Duration(milliseconds: 800),
                 child: TextField(
                   onChanged: (value) {
-                          _email = value;
-                        },
+                    _email = value;
+                  },
                   cursorColor: Colors.black,
                   decoration: InputDecoration(
                     labelText: 'Email',
@@ -120,13 +123,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       size: 18,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: kSecondColor, width: 2),
+                      borderSide:
+                          const BorderSide(color: kSecondColor, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     floatingLabelStyle:
                         const TextStyle(color: kSecondColor, fontSize: 18),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: kSecondColor, width: 1.5),
+                      borderSide:
+                          const BorderSide(color: kSecondColor, width: 1.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -139,16 +144,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 delay: const Duration(milliseconds: 800),
                 duration: const Duration(milliseconds: 800),
                 child: TextField(
+                  key: const Key('password_field'),
                   obscureText: _isObscure,
                   cursorColor: kSecondColor,
                   onChanged: (value) {
-                          _password = value;
-                        },
+                    _password = value;
+                  },
                   decoration: InputDecoration(
                     labelText: 'Password',
                     hintText: 'Password',
                     suffixIcon: IconButton(
-                      icon: const Icon(Icons.remove_red_eye, color: kSecondColor),
+                      icon:
+                          const Icon(Icons.remove_red_eye, color: kSecondColor),
                       onPressed: () {
                         setState(() {
                           _isObscure = !_isObscure;
@@ -170,13 +177,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       size: 18,
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: kSecondColor, width: 2),
+                      borderSide:
+                          const BorderSide(color: kSecondColor, width: 2),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     floatingLabelStyle:
                         const TextStyle(color: kSecondColor, fontSize: 18),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: kSecondColor, width: 1.5),
+                      borderSide:
+                          const BorderSide(color: kSecondColor, width: 1.5),
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -186,12 +195,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 15,
               ),
               FadeInUp(
+                key: const Key('login_button'),
                 duration: const Duration(milliseconds: 800),
                 delay: const Duration(milliseconds: 800),
                 child: MaterialButton(
-                  onPressed: () async{
+                  onPressed: () async {
                     await _auth.signInWithEmailAndPassword(
-                                email: _email, password: _password);
+                        email: _email, password: _password);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -199,7 +209,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   height: 45,
-                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -280,12 +291,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     TextButton(
                       onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AuthSignupScreen()),
-                    );
-                  },
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AuthSignupScreen()),
+                        );
+                      },
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(color: kSecondColor, fontSize: 14.0),
